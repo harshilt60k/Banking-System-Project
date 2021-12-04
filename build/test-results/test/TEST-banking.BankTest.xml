@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="banking.BankTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2021-12-04T00:25:13" hostname="n3-75-111.dhcp.drexel.edu" time="0.061">
+  <properties/>
+  <testcase name="pass_time_to_savings_account()" classname="banking.BankTest" time="0.001"/>
+  <testcase name="savings_account_cannot_go_under_zero()" classname="banking.BankTest" time="0.001"/>
+  <testcase name="withdraw_money()" classname="banking.BankTest" time="0.0"/>
+  <testcase name="remove_account_from_bank()" classname="banking.BankTest" time="0.001"/>
+  <testcase name="add_2_accounts_to_bank()" classname="banking.BankTest" time="0.005"/>
+  <testcase name="deposit_money()" classname="banking.BankTest" time="0.001"/>
+  <testcase name="minimum_balance()" classname="banking.BankTest" time="0.003"/>
+  <testcase name="deposit_money_twice_into_savings_account()" classname="banking.BankTest" time="0.005"/>
+  <testcase name="add_account_to_bank()" classname="banking.BankTest" time="0.004"/>
+  <testcase name="pass_time_to_checking_account()" classname="banking.BankTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

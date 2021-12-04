@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="banking.CommandProcessorRedirectTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2021-12-04T00:25:13" hostname="n3-75-111.dhcp.drexel.edu" time="0.022">
+  <properties/>
+  <testcase name="withdraw_too_much_from_account()" classname="banking.CommandProcessorRedirectTest" time="0.006"/>
+  <testcase name="create_multiple_savings_accounts()" classname="banking.CommandProcessorRedirectTest" time="0.002"/>
+  <testcase name="create_multiple_cd_accounts()" classname="banking.CommandProcessorRedirectTest" time="0.001"/>
+  <testcase name="create_multiple_checking_accounts()" classname="banking.CommandProcessorRedirectTest" time="0.0"/>
+  <testcase name="create_checkings_account_with_correct_apr_and_id()" classname="banking.CommandProcessorRedirectTest" time="0.001"/>
+  <testcase name="create_savings_account_correct_id_and_apr()" classname="banking.CommandProcessorRedirectTest" time="0.0"/>
+  <testcase name="withdraw_from_savings()" classname="banking.CommandProcessorRedirectTest" time="0.001"/>
+  <testcase name="transfer_between_savings_and_checkings()" classname="banking.CommandProcessorRedirectTest" time="0.001"/>
+  <testcase name="withdraw_from_cd()" classname="banking.CommandProcessorRedirectTest" time="0.0"/>
+  <testcase name="create_cd_account_with_correct_balance_and_apr_and_id()" classname="banking.CommandProcessorRedirectTest" time="0.001"/>
+  <testcase name="deposit_into_empty_checking_account()" classname="banking.CommandProcessorRedirectTest" time="0.0"/>
+  <testcase name="deposit_multiple_times()" classname="banking.CommandProcessorRedirectTest" time="0.0"/>
+  <testcase name="withdraw_from_checking()" classname="banking.CommandProcessorRedirectTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
