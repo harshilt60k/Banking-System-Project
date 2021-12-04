@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="banking.MasterControlTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2021-12-04T00:25:13" hostname="n3-75-111.dhcp.drexel.edu" time="0.037">
+<testsuite name="banking.MasterControlTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2021-12-04T03:20:14" hostname="n3-75-111.dhcp.drexel.edu" time="0.054">
   <properties/>
-  <testcase name="type_in_deposit_command_is_invalid()" classname="banking.MasterControlTest" time="0.004"/>
-  <testcase name="type_in_create_command_is_invalid()" classname="banking.MasterControlTest" time="0.003"/>
-  <testcase name="create_test_for_final_output()" classname="banking.MasterControlTest" time="0.007"/>
-  <testcase name="pdf_example()" classname="banking.MasterControlTest" time="0.002"/>
-  <testcase name="invalid_to_create_commands_with_same_ID()" classname="banking.MasterControlTest" time="0.002"/>
-  <testcase name="typo_commands_both_invalid()" classname="banking.MasterControlTest" time="0.003"/>
-  <testcase name="withdraw_twice_from_account()" classname="banking.MasterControlTest" time="0.001"/>
+  <testcase name="type_in_deposit_command_is_invalid()" classname="banking.MasterControlTest" time="0.002"/>
+  <testcase name="type_in_create_command_is_invalid()" classname="banking.MasterControlTest" time="0.0"/>
+  <testcase name="incorrect_create_command()" classname="banking.MasterControlTest" time="0.0"/>
+  <testcase name="create_checking_test_for_final_output()" classname="banking.MasterControlTest" time="0.029"/>
+  <testcase name="create_checking_account_all_zeros()" classname="banking.MasterControlTest" time="0.006"/>
+  <testcase name="pdf_example()" classname="banking.MasterControlTest" time="0.001"/>
+  <testcase name="create_cd_test_for_final_output()" classname="banking.MasterControlTest" time="0.001"/>
+  <testcase name="create_account_with_all_0s()" classname="banking.MasterControlTest" time="0.002"/>
+  <testcase name="deposit_in_cd()" classname="banking.MasterControlTest" time="0.001"/>
+  <testcase name="create_savings_test_for_final_output()" classname="banking.MasterControlTest" time="0.0"/>
+  <testcase name="invalid_to_create_commands_with_same_ID()" classname="banking.MasterControlTest" time="0.001"/>
+  <testcase name="typo_commands_both_invalid()" classname="banking.MasterControlTest" time="0.0"/>
+  <testcase name="create_savings_account_all_zeros()" classname="banking.MasterControlTest" time="0.002"/>
+  <testcase name="withdraw_twice_from_account()" classname="banking.MasterControlTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

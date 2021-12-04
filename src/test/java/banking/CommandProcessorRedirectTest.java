@@ -7,6 +7,8 @@ import banking.accounts.SavingsAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.text.DecimalFormat;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CommandProcessorRedirectTest {
@@ -24,27 +26,50 @@ public class CommandProcessorRedirectTest {
     // Create processor Tests
 
     @Test
-    void create_checkings_account_with_correct_apr_and_id() {
+    void create_checkings_account_with_correct_id() {
         commandProcessorRedirect.process("create checking 12345678 1.0");
         assertEquals(12345678, bank.getAccounts().get(12345678).getID());
+    }
+
+    @Test
+    void create_checkings_account_with_correct_apr() {
+        commandProcessorRedirect.process("create checking 12345678 1.0");
         assertEquals(1.0, bank.getAccounts().get(12345678).getAPR());
     }
 
     @Test
-    void create_cd_account_with_correct_balance_and_apr_and_id() {
+    void create_cd_account_with_correct_balance() {
         commandProcessorRedirect.process("create cd 12345678 1.0 2000");
 
-        assertEquals(12345678, bank.getAccounts().get(12345678).getID());
-        assertEquals(1.0, bank.getAccounts().get(12345678).getAPR());
         assertEquals(2000, bank.getAccounts().get(12345678).getAmount());
     }
 
     @Test
-    void create_savings_account_correct_id_and_apr() {
-        commandProcessorRedirect.process("create savings 12345678 1.0");
+    void create_cd_account_with_correct_id() {
+        commandProcessorRedirect.process("create cd 12345678 1.0 2000");
+
         assertEquals(12345678, bank.getAccounts().get(12345678).getID());
+    }
+
+    @Test
+    void create_cd_account_with_correct_apr() {
+        commandProcessorRedirect.process("create cd 12345678 1.0 2000");
+
         assertEquals(1.0, bank.getAccounts().get(12345678).getAPR());
     }
+
+    @Test
+    void create_savings_account_correct_id() {
+        commandProcessorRedirect.process("create savings 12345678 1.0");
+        assertEquals(12345678, bank.getAccounts().get(12345678).getID());
+    }
+
+    @Test
+    void create_savings_account_correct_apr() {
+        commandProcessorRedirect.process("create savings 12345678 1.0");
+        assertEquals(1.0, bank.getAccounts().get(12345678).getAPR());
+    }
+
 
     @Test
     void create_multiple_savings_accounts() {
@@ -91,12 +116,29 @@ public class CommandProcessorRedirectTest {
     }
 
     @Test
+    void deposit_into_checking_account_which_has_money() {
+        Account account = new CheckingsAccount(12345678, 1.0);
+        bank.add_account(12345678, account);
+        bank.add_money_to_account(12345678, 50);
+        commandProcessorRedirect.process("deposit 12345678 100");
+        assertEquals(150, bank.getAccounts().get(12345678).getAmount());
+    }
+
+    @Test
     void deposit_multiple_times() {
         Account account = new CheckingsAccount(12345678, 1.0);
         bank.add_account(12345678, account);
         commandProcessorRedirect.process("deposit 12345678 100");
         commandProcessorRedirect.process("deposit 12345678 100");
         assertEquals(200, bank.getAccounts().get(12345678).getAmount());
+    }
+
+    @Test
+    void deposit_zero_in_account() {
+        Account account = new CheckingsAccount(12345678, 1.0);
+        bank.add_account(12345678, account);
+        commandProcessorRedirect.process("deposit 12345678 0");
+        assertEquals(0, bank.getAccounts().get(12345678).getAmount());
     }
 
     // Withdraw Processor Tests
@@ -152,5 +194,78 @@ public class CommandProcessorRedirectTest {
         assertEquals(300, bank.getAccounts().get(12345678).getAmount());
         assertEquals(1300, bank.getAccounts().get(56781234).getAmount());
     }
+
+    // Passtime tests
+
+    @Test
+    void pass_time_savings() {
+        Account account = new SavingsAccount(12345678, 0.5);
+        bank.add_account(12345678, account);
+        bank.add_money_to_account(12345678, 200);
+        bank.passTime(1);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String outputNumber = decimalFormat.format(bank.getAccounts().get(12345678).getAmount());
+        String expected = decimalFormat.format(200.08);
+        assertEquals(expected, outputNumber);
+    }
+
+    @Test
+    void pass_time_checking() {
+        Account account = new CheckingsAccount(12345678, 0.5);
+        bank.add_account(12345678, account);
+        bank.add_money_to_account(12345678, 200);
+        bank.passTime(1);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String outputNumber = decimalFormat.format(bank.getAccounts().get(12345678).getAmount());
+        String expected = decimalFormat.format(200.08);
+        assertEquals(expected, outputNumber);
+    }
+
+    @Test
+    void pass_time_cd() {
+        Account account = new CdAccount(12345678, 0.5, 2000);
+        bank.add_account(12345678, account);
+        bank.passTime(1);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String outputNumber = decimalFormat.format(bank.getAccounts().get(12345678).getAmount());
+        String expected = decimalFormat.format(2003.34);
+        assertEquals(expected, outputNumber);
+    }
+
+    @Test
+    void pass_time_maximum_cd_account() {
+        Account account = new CdAccount(12345678, 0.5, 2000);
+        bank.add_account(12345678, account);
+        bank.passTime(60);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String outputNumber = decimalFormat.format(bank.getAccounts().get(12345678).getAmount());
+        String expected = decimalFormat.format(2210.30);
+        assertEquals(expected, outputNumber);
+    }
+
+    @Test
+    void pass_time_maximum_savings_acocunt() {
+        Account account = new SavingsAccount(12345678, 0.5);
+        bank.add_account(12345678, account);
+        bank.add_money_to_account(12345678, 200);
+        bank.passTime(60);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String outputNumber = decimalFormat.format(bank.getAccounts().get(12345678).getAmount());
+        String expected = decimalFormat.format(205.06);
+        assertEquals(expected, outputNumber);
+    }
+
+    @Test
+    void pass_time_maximum_checking_account() {
+        Account account = new CheckingsAccount(12345678, 0.5);
+        bank.add_account(12345678, account);
+        bank.add_money_to_account(12345678, 200);
+        bank.passTime(60);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String outputNumber = decimalFormat.format(bank.getAccounts().get(12345678).getAmount());
+        String expected = decimalFormat.format(205.06);
+        assertEquals(expected, outputNumber);
+    }
+
 
 }

@@ -17,7 +17,13 @@ public class CdAccount extends Account {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         String accountAmount = decimalFormat.format(this.getAmount());
         String accountApr = decimalFormat.format(this.getAPR());
-        String str = String.format("%s %d %s %s", this.getAccountType(), this.getID(), accountAmount, accountApr);
+        String str = "";
+        if (this.getID() == 00000000) {
+            str += String.format("%s %08d %s %s", this.getAccountType(), this.getID(), accountAmount, accountApr);
+        } else {
+            str += String.format("%s %d %s %s", this.getAccountType(), this.getID(), accountAmount, accountApr);
+        }
+
         return str;
     }
 

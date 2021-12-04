@@ -110,9 +110,75 @@ public class MasterControlTest {
     }
 
     @Test
-    void create_test_for_final_output() {
+    void create_savings_test_for_final_output() {
         input.add("Create savings 12345678 0.6");
         List<String> actual = masterControl.start(input);
         assertEquals("Savings 12345678 0.00 0.60", actual.get(0));
     }
+
+    @Test
+    void create_checking_test_for_final_output() {
+        input.add("Create checking 12345678 0.6");
+        List<String> actual = masterControl.start(input);
+        assertEquals("Checking 12345678 0.00 0.60", actual.get(0));
+    }
+
+    @Test
+    void create_cd_test_for_final_output() {
+        input.add("Create cd 12345678 0.6 2000");
+        List<String> actual = masterControl.start(input);
+        assertEquals("Cd 12345678 2000.00 0.60", actual.get(0));
+    }
+
+    @Test
+    void incorrect_create_command() {
+        input.add("Create cd 12345678 2000");
+        List<String> actual = masterControl.start(input);
+        assertEquals(1, actual.size());
+        assertEquals("Create cd 12345678 2000", actual.get(0));
+    }
+
+    @Test
+    void deposit_in_cd() {
+        input.add("Create cd 12345678 0.5 2000");
+        input.add("deposit 12345678 100");
+
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(2, actual.size());
+        assertEquals("Cd 12345678 2000.00 0.50", actual.get(0));
+        assertEquals("deposit 12345678 100", actual.get(1));
+    }
+
+    @Test
+    void create_account_with_all_0s() {
+        input.add("Create cd 00000000 0.5 2000");
+
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(1, actual.size());
+        assertEquals("Cd 00000000 2000.00 0.50", actual.get(0));
+    }
+
+    @Test
+    void create_checking_account_all_zeros() {
+        input.add("Create checking 00000000 0.5");
+
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(1, actual.size());
+        assertEquals("Checking 00000000 0.00 0.50", actual.get(0));
+    }
+
+    @Test
+    void create_savings_account_all_zeros() {
+        input.add("Create savings 00000000 0.5");
+
+        List<String> actual = masterControl.start(input);
+
+        assertEquals(1, actual.size());
+        assertEquals("Savings 00000000 0.00 0.50", actual.get(0));
+    }
+
+
 }
