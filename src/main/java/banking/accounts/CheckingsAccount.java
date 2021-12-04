@@ -51,8 +51,4 @@ public class CheckingsAccount extends Account {
         this.setAmount(multBalanceWithDecimalAPRDividedBy12 + this.getAmount());
     }
 
-
-//    banking.accounts.Account banking.accounts.CheckingsAccount() {
-//        return new banking.accounts.CheckingsAccount(getID(), getAPR());
-//    }
 }

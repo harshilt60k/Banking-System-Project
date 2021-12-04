@@ -69,8 +69,10 @@ public abstract class Account {
             String[] tokens = history.get(i).split(" ");
             if (tokens[0].equalsIgnoreCase("create") || tokens[0].equalsIgnoreCase("pass")) {
                 history.remove(i);
+            } else {
+                i++;
             }
-            i++;
+
         }
 
         return history;

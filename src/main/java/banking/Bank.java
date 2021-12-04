@@ -67,20 +67,10 @@ public class Bank {
             startMonths++;
         }
 
-//        while (i < removeList.size()) {
-//            removeAccount(removeList.get(i));
-//            if (removeList.size() == 0) {
-//                break;
-//            } else {
-//                i++;
-//            }
-//        }
+
         for (int i = 0; i < removeList.size(); i++) {
             removeAccount(removeList.get(i));
         }
     }
 
-//    public void addIdToHistory(int ID) {
-//        idHistory.add(ID);
-//    }
 }

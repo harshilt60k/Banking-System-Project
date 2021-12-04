@@ -92,13 +92,6 @@ public class BankTest {
         assertEquals(true, bank.getAccounts().isEmpty());
     }
 
-//    @Test
-//    void pass_time_to_cd_account() {
-//        bank.add_account(ID, new CdAccount(ID, APR, AMOUNT));
-//        bank.passTime(1);
-//        assertEquals(2000, bank.getAccounts().get(ID).getAmount());
-//    }
-
     @Test
     void minimum_balance() {
         bank.add_account(ID, new CheckingsAccount(ID, APR));

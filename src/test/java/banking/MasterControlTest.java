@@ -151,7 +151,7 @@ public class MasterControlTest {
     }
 
     @Test
-    void create_account_with_all_0s() {
+    void create_cd_account_with_all_0s() {
         input.add("Create cd 00000000 0.5 2000");
 
         List<String> actual = masterControl.start(input);

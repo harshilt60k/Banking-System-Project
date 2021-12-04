@@ -180,8 +180,20 @@ public class CommandValidatorRedirectTest {
     }
 
     @Test
-    void apr_less_than_0() {
+    void apr_less_than_0_savings() {
         boolean actual = commandValidatorRedirect.validate("Create savings 12345678 -0.5");
+        assertFalse(actual);
+    }
+
+    @Test
+    void apr_less_than_0_checking() {
+        boolean actual = commandValidatorRedirect.validate("Create checking 12345678 -0.5");
+        assertFalse(actual);
+    }
+
+    @Test
+    void apr_less_than_0_cd() {
+        boolean actual = commandValidatorRedirect.validate("Create cd 12345678 -0.5 2000");
         assertFalse(actual);
     }
 
@@ -199,9 +211,16 @@ public class CommandValidatorRedirectTest {
 
     @Test
     void account_id_already_exists() {
-        Account account = new CheckingsAccount(12345678, 0.01);
+        Account account = new SavingsAccount(12345678, 0.5);
         bank.add_account(12345678, account);
+
         boolean actual = commandValidatorRedirect.validate("create savings 12345678 0.0");
+        assertFalse(actual);
+    }
+
+    @Test
+    void create_account_with_negative_balance() {
+        boolean actual = commandValidatorRedirect.validate("create cd 12345678 0.0 -900");
         assertFalse(actual);
     }
 
@@ -211,10 +230,6 @@ public class CommandValidatorRedirectTest {
     void valid_deposit_command() {
         Account account = new CheckingsAccount(12345678, 0.01);
         bank.add_account(12345678, account);
-        Account account1 = new SavingsAccount(98765432, 0.6);
-        bank.add_account(98765432, account);
-        Account account2 = new CdAccount(56781234, 1.2, 2000);
-        bank.add_account(56781234, account);
         boolean actual = commandValidatorRedirect.validate("Deposit 12345678 500");
         assertTrue(actual);
     }
@@ -223,10 +238,6 @@ public class CommandValidatorRedirectTest {
     void valid_deposit_command_camel_case() {
         Account account = new CheckingsAccount(12345678, 0.01);
         bank.add_account(12345678, account);
-        Account account1 = new SavingsAccount(98765432, 0.6);
-        bank.add_account(98765432, account);
-        Account account2 = new CdAccount(56781234, 1.2, 2000);
-        bank.add_account(56781234, account);
         boolean actual = commandValidatorRedirect.validate("DePoSiT 12345678 500");
         assertTrue(actual);
     }
@@ -235,22 +246,16 @@ public class CommandValidatorRedirectTest {
     void deposit_with_create_command_inside() {
         Account account = new CheckingsAccount(12345678, 0.01);
         bank.add_account(12345678, account);
-        Account account1 = new SavingsAccount(98765432, 0.6);
-        bank.add_account(98765432, account1);
-        Account account2 = new CdAccount(56781234, 1.2, 2000);
-        bank.add_account(56781234, account2);
+
         boolean actual = commandValidatorRedirect.validate("Deposit create 12345678 500");
         assertFalse(actual);
     }
 
     @Test
-    void type_deposit_spelling() {
+    void typo_deposit_spelling() {
         Account account = new CheckingsAccount(12345678, 0.01);
         bank.add_account(12345678, account);
-        Account account1 = new SavingsAccount(98765432, 0.6);
-        bank.add_account(98765432, account1);
-        Account account2 = new CdAccount(56781234, 1.2, 2000);
-        bank.add_account(56781234, account2);
+
         boolean actual = commandValidatorRedirect.validate("Deposittt 12345678 500");
         assertFalse(actual);
     }
@@ -259,10 +264,7 @@ public class CommandValidatorRedirectTest {
     void deposit_is_missing_in_command() {
         Account account = new CheckingsAccount(12345678, 0.01);
         bank.add_account(12345678, account);
-        Account account1 = new SavingsAccount(98765432, 0.6);
-        bank.add_account(98765432, account1);
-        Account account2 = new CdAccount(56781234, 1.2, 2000);
-        bank.add_account(56781234, account2);
+
         boolean actual = commandValidatorRedirect.validate("12345678 500");
         assertFalse(actual);
     }
@@ -455,7 +457,7 @@ public class CommandValidatorRedirectTest {
     }
 
     @Test
-    void missing_apr_in_command() {
+    void missing_amount_in_command() {
         Account account = new CheckingsAccount(12345678, 0.5);
         bank.add_account(12345678, account);
         boolean actual = commandValidatorRedirect.validate("Withdraw 12345678");
@@ -503,6 +505,15 @@ public class CommandValidatorRedirectTest {
         bank.add_account(12345678, account);
         boolean actual = commandValidatorRedirect.validate("123456778 1001");
         assertFalse(actual);
+    }
+
+    @Test
+    void balance_not_sufficient_in_account() {
+        Account account = new SavingsAccount(12345678, 0.5);
+        bank.add_account(12345678, account);
+        bank.add_money_to_account(12345678, 200);
+        boolean actual = commandValidatorRedirect.validate("Withdraw 12345678 300");
+        assertTrue(actual);
     }
 
     //Tranfer validator tests

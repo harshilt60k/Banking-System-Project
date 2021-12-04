@@ -18,15 +18,14 @@ public class MasterControl {
     public List<String> start(List<String> input) {
         for (String command : input) {
             if (commandValidatorRedirect.validate(command)) {
-//                commandProcessorRedirect.process(command);
+
                 commandProcessorRedirect.addTransactionsForAccount(command);
-//                commandStorage.finalOutput();
+
             } else {
                 commandStorage.add_invalid_commands(command);
             }
         }
 
-//        return commandStorage.getInvalidCommands();
         return commandStorage.finalOutput();
     }
 }
